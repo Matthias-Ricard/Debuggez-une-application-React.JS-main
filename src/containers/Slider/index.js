@@ -10,7 +10,7 @@ const Slider = () => {
 
   const byDateDesc = data?.focus
     ? [...data.focus].sort((a, b) =>
-        new Date(a.date) > new Date(b.date) ? -1 : 1
+        new Date(a.date) > new Date(b.date) ? 1 : -1
       )
     : [];
 
@@ -52,7 +52,7 @@ const Slider = () => {
         <div className="SlideCard__pagination">
           {byDateDesc.map((event, idx) => (
           <input
-            key={`pagination-${event.id}`} // ✅ clé UNIQUE
+            key={`pagination-${event.title}-${event.date}`} // ✅ clé UNIQUE
             type="radio"
             name="radio-button"
             checked={index === idx} // ✅ correspondance directe
