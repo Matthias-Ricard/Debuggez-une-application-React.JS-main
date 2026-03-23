@@ -17,15 +17,10 @@ const EventList = () => {
   ? data?.events
   : data?.events.filter((event) => event.type.toLowerCase() === type?.toLowerCase());
   console.log("Données des événements :", data?.events);
-  const filteredEvents = (eventsFilteredByType || []).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
-  });
+  const filteredEvents = (eventsFilteredByType || []).slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE
+  );
 
   const changeType = (evtType) => {
     setCurrentPage(1);
@@ -47,7 +42,7 @@ const EventList = () => {
           />
           <div id="events" className="ListContainer">
             {filteredEvents.map((event) => (
-              <Modal key={`${event.title}-${event.date}-${Math.random()}`} Content={<ModalEvent event={event} />}>
+              <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard
                     onClick={() => setIsOpened(true)}
